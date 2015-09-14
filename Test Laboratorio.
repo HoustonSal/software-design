@@ -1,0 +1,45 @@
+package mx.iteso;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.Assert;
+import org.mockito.Mockito.*;
+
+import static org.junit.Assert.*;
+
+import static  mx.iteso.TacitKnowledgePrinter.*;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
+public class TacitKnowledgePrinterTest {
+    private Printer printer;
+
+    @Before
+    public void setUp(){
+        printer = mock(Printer.class);
+        TacitKnowledgePrinter tacitKnowledgePrinter = new TacitKnowledgePrinter(printer);
+    }
+
+    @Test
+    public void testprintNumbersTimes10(){
+        TacitKnowledgePrinter tacitKnowledgePrinter = new TacitKnowledgePrinter(printer);
+        tacitKnowledgePrinter.printNumbers(10);
+        verify(printer, times(10)).print(""+anyInt());
+    }
+
+    @Test
+    public void testprinterNumberResult(){
+        TacitKnowledgePrinter tacitKnowledgePrinter = new TacitKnowledgePrinter(printer);
+        tacitKnowledgePrinter.printNumbers(5);
+        assertEquals(tacitKnowledgePrinter.printNumbers(5), "12Tacit4Knowledge");
+    }
+
+    @Test (expected = Exception.class)
+    public void testprinterNumberException(){
+        TacitKnowledgePrinter tacitKnowledgePrinter = new TacitKnowledgePrinter(printer);
+        tacitKnowledgePrinter.printNumbers(0);
+    }
+
+}
